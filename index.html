@@ -1,231 +1,363 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional Hub Dashboard</title>
+    <title>Sarfraz Developer - Professional Credentials Hub</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
         :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --bg-color: #f8fafc;
-            --card-bg: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.08), 0 2px 4px -2px rgb(0 0 0 / 0.08);
+            --primary-color: #4f46e5;
+            --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
         }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        }
-
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            height: 100vh;
-            max-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            padding: 0.75rem;
-            overflow: hidden;
+            background: var(--bg-gradient);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            color: #1e293b;
+        }
+        .header-box {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        header {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.5rem 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-shrink: 0;
-            box-shadow: var(--shadow);
-        }
-
-        header h1 {
-            font-size: 1rem;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .home-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            background: var(--bg-color);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .home-btn:hover {
-            background: var(--primary);
-            color: #ffffff;
-            border-color: var(--primary);
-        }
-
-        main {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            flex: 1;
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            grid-auto-rows: minmax(0, 1fr);
-            gap: 0.5rem;
-            padding: 0.5rem 0;
-            min-height: 0;
-        }
-
-        .card {
+        /* Perfect Horizontal Peek Layout Slider */
+        .slider-container {
             position: relative;
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 0.75rem;
-            box-shadow: var(--shadow);
-            text-decoration: none;
-            color: inherit;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            justify-content: center;
-            gap: 0.2rem;
-            transition: all 0.2s ease;
+        }
+        .cards-slider {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            gap: 1rem;
+            padding: 0.5rem 0.2rem;
+            scrollbar-width: none; /* Hide scrollbar for clean UI */
+        }
+        .cards-slider::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Mobile: First card 100%, second card 60% peek layout */
+        .slider-card-item {
+            flex: 0 0 85%;
+        }
+        /* Tablet & Desktop Layout */
+        @media (min-width: 576px) {
+            .slider-card-item {
+                flex: 0 0 calc(50% - 0.5rem);
+            }
+        }
+        @media (min-width: 992px) {
+            .slider-card-item {
+                flex: 0 0 calc(25% - 0.75rem);
+            }
+        }
+
+        .custom-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             height: 100%;
         }
-
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 15px -3px rgb(79 70 229 / 0.15), 0 4px 6px -4px rgb(79 70 229 / 0.15);
-            z-index: 50;
+        .custom-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 15px -3px rgba(79, 70, 229, 0.15);
         }
-
-        .card-icon {
-            font-size: 1.25rem;
+        .icon-wrapper {
+            font-size: 1.75rem;
+            color: var(--primary-color);
         }
-
-        .card-title {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--text-main);
-            line-height: 1.2;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-
-        .card-desc {
-            position: absolute;
-            bottom: calc(100% + 8px);
-            left: 50%;
-            transform: translateX(-50%) translateY(4px);
-            background: #1e293b;
-            color: #ffffff;
-            padding: 0.4rem 0.6rem;
+        .badge-custom {
             font-size: 0.7rem;
-            border-radius: 6px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            pointer-events: none;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.2);
-            z-index: 100;
-            font-weight: 400;
+            background-color: #e0e7ff;
+            color: #3730a3;
         }
 
-        .card-desc::after {
-            content: '';
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            border-width: 4px;
-            border-style: solid;
-            border-color: #1e293b transparent transparent transparent;
+        /* Blinking Animation for Navigation Arrows */
+        @keyframes pulseBlink {
+            0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+            50% { transform: scale(1.08); opacity: 0.8; box-shadow: 0 0 0 8px rgba(79, 70, 229, 0); }
+            100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+        }
+        .blink-arrow {
+            animation: pulseBlink 1.5s infinite;
         }
 
-        .card:hover .card-desc {
-            opacity: 1;
-            visibility: visible;
-            transform: translateX(-50%) translateY(0);
+        .slider-nav-btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
         }
-
-        @media (min-width: 768px) {
-            .card {
-                align-items: flex-start;
-                text-align: left;
-                padding: 1rem;
-            }
-            .card-title {
-                font-size: 0.85rem;
-            }
+        .slider-nav-btn:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: #fff;
+            border-color: var(--primary-color);
         }
-
-        footer {
-            text-align: center;
-            padding: 0.4rem;
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            background: var(--card-bg);
-            flex-shrink: 0;
-            box-shadow: var(--shadow);
+        .slider-nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            animation: none !important;
         }
     </style>
 </head>
-<body>
+<body class="py-3">
 
-    <header>
-        <h1>Project Hub Dashboard</h1>
-        <a href="../index.html" class="home-btn" id="homeNavigationLink">
-            <span>&larr;</span> Home
-        </a>
-    </header>
+    <div class="container py-2">
+        <!-- Header Section -->
+        <header class="header-box p-3 mb-4 text-center">
+            <h1 class="h4 fw-bold text-primary mb-1"><i class="bi bi-code-slash"></i> Sarfraz Developer Hub</h1>
+            <p class="text-muted small mb-3">Credentials, Accounts, Emails & Gemini Project Links</p>
 
-    <main id="dashboard-grid">
-        <!-- Dynamically populated section cards -->
-    </main>
+            <!-- Links URL Hub, Main GitHub & Admin Button एक ही लाइन में -->
+            <div class="d-flex justify-content-center align-items-center gap-2 flex-wrap">
+                <a href="https://other-course.github.io/links/" target="_blank" class="btn btn-sm btn-outline-primary text-truncate px-3 py-2 fw-semibold">
+                    <i class="bi bi-link-45deg"></i> Links URL Hub
+                </a>
+                <a href="https://github.com/other-course" target="_blank" class="btn btn-sm btn-dark text-truncate px-3 py-2 fw-semibold">
+                    <i class="bi bi-github"></i> Main GitHub
+                </a>
+                <button class="btn btn-sm btn-danger text-truncate px-3 py-2 fw-semibold" data-bs-toggle="modal" data-bs-target="#adminLoginModal">
+                    <i class="bi bi-shield-lock-fill"></i> Admin Panel
+                </button>
+            </div>
+        </header>
 
-    <footer>
-        &copy; 2026 Professional Workspace Hub &bull; Dynamic 100vh Layout
-    </footer>
+        <!-- Horizontal Slider Section -->
+        <div class="slider-container mb-3">
+            <div class="cards-slider w-100" id="cards-slider-container" onscroll="updateArrowStates()">
+                <!-- Cards dynamically injected -->
+            </div>
+        </div>
+
+        <!-- Bottom Forward/Backward Buttons (कार्ड्स के ठीक नीचे सही पोजीशन पर) -->
+        <div class="d-flex justify-content-center align-items-center gap-3 mt-2">
+            <button id="prevBtn" class="slider-nav-btn" onclick="slideCards(-1)" title="Previous">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <span class="text-muted small fw-semibold">Scroll / Navigate</span>
+            <button id="nextBtn" class="slider-nav-btn" onclick="slideCards(1)" title="Next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- 1. Admin Login Modal -->
+    <div class="modal fade" id="adminLoginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title fs-6"><i class="bi bi-lock"></i> Admin Login</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="loginError" class="alert alert-danger d-none py-1 small">गलत आईडी या पासवर्ड!</div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Username</label>
+                        <input type="text" id="adminUser" class="form-control form-control-sm" placeholder="sarfraz">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold">Password</label>
+                        <input type="password" id="adminPass" class="form-control form-control-sm" placeholder="Sarfraz@123">
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm w-100 fw-semibold" onclick="verifyAdmin()">Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Admin Dashboard / Add Link Modal -->
+    <div class="modal fade" id="adminDashboardModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title fs-6"><i class="bi bi-plus-circle"></i> Add New Study & Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addLinkForm" onsubmit="addNewCard(event)">
+                        <div class="row g-3">
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">1. Topic / क्या पढ़ा (Title)</label>
+                                <input type="text" id="newTitle" class="form-control form-control-sm" placeholder="जैसे: JavaScript Array Methods" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">2. Gemini Link / Other Link</label>
+                                <input type="url" id="newUrl" class="form-control form-control-sm" placeholder="https://gemini.google.com/app/..." required>
+                            </div>
+                            <div class="col-md-12">
+                                <label class="form-label small fw-bold">3. Email ID (यदि कोई हो)</label>
+                                <input type="email" id="newEmail" class="form-control form-control-sm" placeholder="sarfrazadeveloper@gmail.com (वैकल्पिक)">
+                            </div>
+                            <div class="col-12 text-end">
+                                <button type="submit" class="btn btn-success btn-sm px-4 fw-semibold"><i class="bi bi-check-lg"></i> Save & Add Card</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        const sections = [
-            { name: "Switch Mode", path: "swithMode.html", icon: "⚡", desc: "BPO Interview Assistance." },
-            { name: "Deployment", path: "deployment.html", icon: "🚀", desc: "Tech Interview Assistance & AI tools." },
-            { name: "Front-End Questions", path: "front-end-questions.html", icon: "❓", desc: "Front-End Questions." },
-            { name: "Principal", path: "principal.html", icon: "👑", desc: "Principal Interview guidelines." },
-            { name: "Promotion", path: "promotion.html", icon: "📈", desc: "Find Coding students via Marketing." },
-            { name: "Codelab", path: "https://other-course.github.io/code-lab/", icon: "💻", desc: "All frontend design codes." },
-            { name: "Course", path: "https://other-course.github.io/course/", icon: "📚", desc: "adca/mnc-job/tailwind/extra-income." },
-            { name: "JS Learning", path: "https://github.com/other-course/js-learning", icon: "💛", desc: "JavaScript concepts and codes" }
+        // All Original Content Data Intact
+        const defaultData = [
+            { title: "GitHub Access Token", category: "Auth", icon: "bi-key-fill", linkText: "View Token", url: "#", email: "N/A", desc: "Token: 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 (Codelab)" },
+            { title: "Primary Developer Account", category: "GitHub", icon: "bi-person-badge-fill", linkText: "other-course", url: "https://github.com/other-course", email: "sarfrazadeveloper@gmail.com", desc: "Main Workspace Profile" },
+            { title: "Links URL Hub", category: "Deployment", icon: "bi-globe", linkText: "Open Dashboard", url: "https://other-course.github.io/links/", email: "sarfrazadeveloper@gmail.com", desc: "Main central links repository directory." },
+            { title: "Gemini Study Archive", category: "AI Link", icon: "bi-cpu-fill", linkText: "Open Chat", url: "https://gemini.google.com/app/7e93617c1efd059b", email: "N/A", desc: "GitHub & Gemini comprehensive study reference chat." },
+            { title: "English App Project", category: "AI App", icon: "bi-translate", linkText: "Open Chat", url: "https://gemini.google.com/app/d73b58405995adc0", email: "akram62045@gmail.com", desc: "English App Gemini workspace" },
+            { title: "Firebase & EmailJS Integration", category: "Backend", icon: "bi-envelope-check-fill", linkText: "View Notes", url: "https://gemini.google.com/app/904b0a34db356079", email: "N/A", desc: "Firebase database and EmailJS form integration chat notes." },
+            { title: "GitHub Account 1", category: "Account", icon: "bi-github", linkText: "Email Config", url: "mailto:999moneysave1@gmail.com", email: "999moneysave1@gmail.com", desc: "Registered Email account" },
+            { title: "GitHub Account 2", category: "Account", icon: "bi-github", linkText: "Email Config", url: "mailto:eews999@gmail.com", email: "eews999@gmail.com", desc: "Registered Email account" },
+            { title: "GitHub Account 3", category: "Account", icon: "bi-github", linkText: "Email Config", url: "mailto:999moneysave@gmail.com", email: "999moneysave@gmail.com", desc: "Registered Email account" },
+            { title: "GitHub Account 4", category: "Account", icon: "bi-github", linkText: "Email Config", url: "mailto:myjobsarfraz@gmail.com", email: "myjobsarfraz@gmail.com", desc: "Registered Email account" }
         ];
 
-        const grid = document.getElementById('dashboard-grid');
-        grid.innerHTML = sections.map(item => `
-            <a href="${item.path}" class="card">
-                <div class="card-icon">${item.icon}</div>
-                <div class="card-title">${item.name}</div>
-                <div class="card-desc">${item.desc}</div>
-            </a>
-        `).join('');
+        let credentialsData = JSON.parse(localStorage.getItem('sarfrazStudyData')) || defaultData;
+
+        // Render Cards Function
+        function renderCards() {
+            const container = document.getElementById('cards-slider-container');
+            container.innerHTML = credentialsData.map(item => `
+                <div class="slider-card-item">
+                    <div class="custom-card p-3 d-flex flex-column justify-content-between"
+                         data-bs-toggle="tooltip"
+                         data-bs-placement="top"
+                         title="Topic: ${item.title} | Email: ${item.email || 'N/A'}">
+                        <div>
+                            <div class="d-flex align-items-center justify-content-between mb-2">
+                                <div class="icon-wrapper"><i class="bi ${item.icon || 'bi-journal-code'}"></i></div>
+                                <span class="badge badge-custom px-2 py-1">${item.category || 'Study'}</span>
+                            </div>
+                            <h5 class="h6 fw-bold mb-1">${item.title}</h5>
+                            <p class="text-muted small mb-1 text-truncate"><i class="bi bi-envelope"></i> ${item.email || 'No Email'}</p>
+                        </div>
+                        <div>
+                            <a href="${item.url}" target="_blank" class="btn btn-sm btn-outline-dark w-100 fw-semibold">
+                                ${item.linkText || 'Open Link'} <i class="bi bi-arrow-up-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Re-initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+
+            setTimeout(updateArrowStates, 100);
+        }
+
+        // Smart Arrow States & Blinking Control
+        function updateArrowStates() {
+            const slider = document.getElementById('cards-slider-container');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            const scrollLeft = slider.scrollLeft;
+            const maxScrollLeft = slider.scrollWidth - slider.clientWidth;
+
+            // Left Button State
+            if (scrollLeft <= 5) {
+                prevBtn.disabled = true;
+                prevBtn.classList.remove('blink-arrow');
+            } else {
+                prevBtn.disabled = false;
+                prevBtn.classList.add('blink-arrow'); // Left side items available, blink left
+            }
+
+            // Right Button State
+            if (scrollLeft >= maxScrollLeft - 5) {
+                nextBtn.disabled = true;
+                nextBtn.classList.remove('blink-arrow');
+            } else {
+                nextBtn.disabled = false;
+                nextBtn.classList.add('blink-arrow'); // More items ahead, blink right
+            }
+        }
+
+        // Slider Navigation via Buttons
+        function slideCards(direction) {
+            const slider = document.getElementById('cards-slider-container');
+            const scrollAmount = slider.clientWidth * 0.8;
+            slider.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
+            setTimeout(updateArrowStates, 300);
+        }
+
+        // Verify Admin Login
+        function verifyAdmin() {
+            const user = document.getElementById('adminUser').value.trim();
+            const pass = document.getElementById('adminPass').value.trim();
+            const errorBox = document.getElementById('loginError');
+
+            if (user === "sarfraz" && pass === "Sarfraz@123") {
+                errorBox.classList.add('d-none');
+                const loginModal = bootstrap.Modal.getInstance(document.getElementById('adminLoginModal'));
+                loginModal.hide();
+                document.getElementById('adminUser').value = '';
+                document.getElementById('adminPass').value = '';
+                const dashboardModal = new bootstrap.Modal(document.getElementById('adminDashboardModal'));
+                dashboardModal.show();
+            } else {
+                errorBox.classList.remove('d-none');
+            }
+        }
+
+        // Add New Card
+        function addNewCard(event) {
+            event.preventDefault();
+            const title = document.getElementById('newTitle').value;
+            const url = document.getElementById('newUrl').value;
+            const email = document.getElementById('newEmail').value || "N/A";
+
+            const newEntry = {
+                title: title,
+                category: "Study Update",
+                icon: "bi-journal-bookmark-fill",
+                linkText: "Open Study",
+                url: url,
+                email: email,
+                desc: `Topic: ${title} | Email: ${email}`
+            };
+
+            credentialsData.unshift(newEntry);
+            localStorage.setItem('sarfrazStudyData', JSON.stringify(credentialsData));
+
+            renderCards();
+
+            document.getElementById('addLinkForm').reset();
+            const dashboardModal = bootstrap.Modal.getInstance(document.getElementById('adminDashboardModal'));
+            dashboardModal.hide();
+
+            alert("नया स्टडी डेटा सफलतापूपर्वक जोड़ दिया गया है!");
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            renderCards();
+            window.addEventListener('resize', updateArrowStates);
+        });
     </script>
 </body>
 </html>
